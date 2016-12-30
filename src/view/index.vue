@@ -1,8 +1,26 @@
 <template>
-  <el-steps :space="200" :active="step" class="step">
-    <el-step title="活动信息" description="123"></el-step>
-    <el-step title="报名签到" description="124"></el-step>
-    <el-step title="分享设置" description="35"></el-step>
-    <el-step title="个性设置" description="6324"></el-step>
-  </el-steps>
+	<el-row>
+		 <el-tabs :active-name="activeName">
+		    <el-tab-pane label="规则配置" name="first"><editer></editer></el-tab-pane>
+		    <el-tab-pane label="源代码" name="second"><source></source></el-tab-pane>
+		    <el-tab-pane label="版本管理" name="third">版本管理</el-tab-pane>
+		    <el-tab-pane label="数据对象" name="fourth">数据对象</el-tab-pane>
+		  </el-tabs>
+	</el-row>
 </template>
+
+<script type="text/javascript">
+	import editer from '../components/Editer'
+	import source from '../components/source'
+
+	 export default{
+		data:function(){
+			return{
+				activeName:'first'
+			}
+		},
+		components:{
+			editer,source
+		}
+	}
+</script>

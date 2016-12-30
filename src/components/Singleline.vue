@@ -1,10 +1,10 @@
 <template>
 	<el-row>
 	  <el-col :span="24">
-	  	 	{{idx}} 这里存在<el-button type="text" @click="open">{{modelname}}</el-button> <span class="mf-5"><el-button type="text" @click="closemodel()">x</el-button></span>
+	  	 	{{idx}} 存在<el-button type="text" @click="open">{{modelname}}</el-button> <span class="mf-5"><el-button type="text" @click="closemodel()">x</el-button></span>
 	  	 	<div class="fieldTag">
 	  	 		<ul >
-	  	 			<li v-for="field in fields">
+	  	 			<li v-for="field in fields" @click="updateSubField(field)">
 	  	 				<span>{{field.field}}</span> <span>{{field.operation}}</span>  <span>{{field.value}}</span><span class="mf-5"><el-button type="text" @click="closefield(field.field)">x</el-button></span>
 	  	 			</li>
 	  	 		</ul>
@@ -15,27 +15,25 @@
 
 <script type="text/javascript">
 	export default{
-		data: function(){
-			return {
-				
-				idx:'',
-				fields: ''
-			}
-		},
 		props:{
 			'idx': String,
 			'modelname': String,
-			'fields': Object
+			'fields': Array
 		},
 		methods:{
 			open(){
-				this.$emit("opensubModel","open");
+				let convue = {parent:this.modelname,child:this.fields};
+				this.$emit("opensubModel",convue);
 			},
 			closemodel(){
 				this.$emit("closemodel",this.modelname);
 			},
 			closefield(field){
-				this.$emit("closefield",field);
+				this.$emit("closefield",{parent:this.modelname,child:field});
+			},
+			updateSubField: function(field){
+				console.log(field);
+				this.$emit("updateSubField",field);
 			}
 		}
 	}
@@ -56,6 +54,8 @@
 		min-height: 36px;
 		line-height: 36px;
 		padding: 2px 0 0 2px;
+		color:#20a0ff;
+		cursor:pointer;
 	}
 	.mf-5{
 		margin-left: 5px;
